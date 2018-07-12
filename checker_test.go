@@ -51,3 +51,30 @@ func TestIsGeneric(t *testing.T) {
 		}
 	}
 }
+
+func TestIsValid(t *testing.T) {
+	tests := []struct {
+		Email       string
+		ShouldError bool
+	}{
+		{
+			Email:       "example@asdas_-3-43222.com",
+			ShouldError: true,
+		},
+		{
+			Email:       "example--3-43222.com",
+			ShouldError: true,
+		},
+		{
+			Email:       "example@hotmail.com",
+			ShouldError: false,
+		},
+	}
+
+	for _, test := range tests {
+		err := checker.IsValid(test.Email)
+		if err != nil && test.ShouldError == false {
+			t.Error(err)
+		}
+	}
+}
